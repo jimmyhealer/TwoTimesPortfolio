@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 作品集</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css'/>
+</head>
+<body>
+    <div class="container" style="margin-top:20px">
+        <form onsubmit="hh(this);return false;">
+            <input id="t" type="text">
+            <input id="b" type="button" value="送出">
+        </form>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script>
+        function hh(){
+            console.log('sg');
+            var s = $("#t").val();
+            $("#t").val("Hello ,"+s);
+            return false;
+        }
+        $("#b").on('click',()=>{
+            var s = $("#t").val();
+            $("#t").val("Hello ,"+s);
+        })
+    </script>
+</body>
+</html>
