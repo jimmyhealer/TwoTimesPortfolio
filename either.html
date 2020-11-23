@@ -29,6 +29,20 @@
     />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <style>
+        *:focus{
+            border-color: initial !important;
+            box-shadow: none !important;
+        }
+
+        .success, .success:focus{
+            border-color: chartreuse !important;
+        }
+
+        .error, .error:focus{
+            border-color: #ff0000 !important;
+        }
+    </style>
   </head>
 
   <body id="page-top">
@@ -76,27 +90,215 @@
       <section class="resume-section" id="Workflow">
         <!-- 改 -->
         <div class="resume-section-content">
-            <h3>
-                <a target="_blank" href="https://portfolio.programing.tw/">作品集</a>
-            </h3>
-            <h3>
-                <a target="_blank" href="https://jimmyhealer.github.io/programing/">Programing</a>
-            </h3>
-            <h3>
-                <a target="_blank" href="http://www.acrossinfinity.url.tw/">Across</a>
-            </h3>
+          <h3>
+            <a target="_blank" href="https://portfolio.programing.tw/"
+              >作品集</a
+            >
+          </h3>
+          <h3>
+            <a target="_blank" href="https://jimmyhealer.github.io/programing/"
+              >Programing</a
+            >
+          </h3>
+          <h3>
+            <a target="_blank" href="http://www.acrossinfinity.url.tw/"
+              >Across</a
+            >
+          </h3>
         </div>
       </section>
       <hr class="m-0" />
-      <!-- Experience-->      
+      <section class="resume-section" id="Workflow">
+        <!-- 改 -->
+        <div class="resume-section-content">
+          <form onsubmit="return Check();">
+            <div class="form-group">
+              <label for="exampleInputEmail1">身分證字號</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Input"
+                aria-describedby="emailHelp"
+              />
+              <p id="errorInfo" style="color: #ff0000; display: none">
+                身分證錯誤
+              </p>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </section>
+      <hr class="m-0" />
+      <section class="resume-section" id="Workflow">
+        <!-- 改 -->
+        <div class="resume-section-content">
+          <canvas id="myChart"></canvas>
+          <canvas id="myChart2"></canvas>
+          <canvas id="myChart3"></canvas>
+        </div>
+      </section>
     </div>
     <!-- Bootstrap core JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <!-- Third party plugin JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
+    <script>
+      function Check() {
+        var idStr = $("Input").val();
+        var letters = new Array(
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "X",
+          "Y",
+          "W",
+          "Z",
+          "I",
+          "O"
+        );
+        var multiply = new Array(1, 9, 8, 7, 6, 5, 4, 3, 2, 1);
+        var nums = new Array(2);
+        var firstChar;
+        var firstNum;
+        var lastNum;
+        var total = 0;
+        var regExpID = /^[a-z](1|2)\d{8}$/i;
+        if (idStr.search(regExpID) == -1) {
+        $('#Input').removeClass('success');
+        $('#Input').addClass('error');
+          $("#errorInfo").show();
+          return false;
+        } else {
+          firstChar = idStr.charAt(0).toUpperCase();
+          lastNum = idStr.charAt(9);
+        }
+        for (var i = 0; i < 26; i++) {
+          if (firstChar == letters[i]) {
+            firstNum = i + 10;
+            nums[0] = Math.floor(firstNum / 10);
+            nums[1] = firstNum - nums[0] * 10;
+            break;
+          }
+        }
+        for (var i = 0; i < multiply.length; i++) {
+          if (i < 2) {
+            total += nums[i] * multiply[i];
+          } else {
+            total += parseInt(idStr.charAt(i - 1)) * multiply[i];
+          }
+        }
+        if (10 - (total % 10) != lastNum) {
+        $('#Input').removeClass('success');
+        $('#Input').addClass('error');
+          $("#errorInfo").show();
+          return false;
+        }
+        $("#errorInfo").hide();
+        $('#Input').addClass('success');
+        $('#Input').removeClass('error');
+        return false;
+      }
+    </script>
+    <script>
+      $(function () {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var ctx2 = document.getElementById("myChart2").getContext("2d");
+        var ctx3 = document.getElementById("myChart3").getContext("2d");
+        var labelss = [
+              "基隆市",
+              "中正區",
+              "七堵區",
+              "暖暖區",
+              "仁愛區",
+              "中山區",
+              "安樂區",
+              "信義區",
+            ];
+        var chart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labelss,
+            datasets: [
+              {
+                label: "村里數",
+                backgroundColor: "rgb(255, 99, 132)",
+                borderColor: "rgb(255, 99, 132)",
+                data: [157, 26, 20, 13, 29, 24, 25, 20],
+              }
+            ],
+          }
+        });
+        var chart2 = new Chart(ctx2, {
+          type: "bar",
+          data: {
+            labels: labelss,
+            datasets: [
+              {
+                label: "鄰數",
+                backgroundColor: "rgb(124, 59, 132)",
+                borderColor: "rgb(124, 59, 132)",
+                data: [3331,516,412,280,536,520,647,420],
+              },
+              {
+                label: "戶數",
+                backgroundColor: "rgb(25, 199, 12)",
+                borderColor: "rgb(25, 199, 12)",
+                data: [155454,22849,21855,16061,19033,19252,34028,22376],
+              }
+            ],
+          }
+        });
+        var chart3 = new Chart(ctx3, {
+          type: "line",
+          data: {
+            labels: labelss,
+            datasets: [
+              {
+                label: "總人口數",
+                backgroundColor: "rgba(16, 149, 237,0.5)",
+                borderColor: "rgba(16, 149, 237,0.5)",
+                data: [367890,51296,53646,38644,42865,46497,81860,53082],
+              },
+              {
+                label: "男生人數",
+                backgroundColor: "rgba(121, 142, 247,0.5)",
+                borderColor: "rgba(121, 142, 247,0.5)",
+                data: [183494,26060,26852,19315,21144,23586,40483,26054],
+              },
+              {
+                label: "女生人數",
+                backgroundColor: "rgb(240, 194, 151)",
+                borderColor: "rgb(240, 194, 151)",
+                data: [184396,25236,26794,19329,21721,22911,41377,27028],
+              }
+
+            ],
+          }
+        });
+      });
+    </script>
   </body>
 </html>
-<!-- Version: 2.0.1 -->
+<!-- Version: 2.0.2 -->
+
