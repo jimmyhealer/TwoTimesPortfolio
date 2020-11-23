@@ -40,3 +40,4 @@
   });
 
 })(jQuery); // End of use strict
+// Version: 2.0.3

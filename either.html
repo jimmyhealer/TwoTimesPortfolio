@@ -126,10 +126,14 @@
                 type="text"
                 class="form-control"
                 id="Input"
-                aria-describedby="emailHelp"
+								aria-describedby="emailHelp"
+								autocomplete="off"
               />
               <p id="errorInfo" style="color: #ff0000; display: none">
                 身分證錯誤
+							</p>
+							<p id="successInfo" style="color: #00ff00; display: none">
+                身分證驗證正確
               </p>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -157,7 +161,7 @@
     <script src="js/scripts.js"></script>
     <script>
       function Check() {
-        var idStr = $("Input").val();
+        var idStr = $("Input").val().trim();
         var letters = new Array(
           "A","B","C","D","E","F","G","H","J","K","L","M","N",
           "P","Q","R","S","T","U","V","X","Y","W","Z","I","O"
@@ -173,6 +177,7 @@
           $("#Input").removeClass("success");
           $("#Input").addClass("error");
           $("#errorInfo").show();
+          $("#successInfo").hide();
           return false;
         } else {
           firstChar = idStr.charAt(0).toUpperCase();
@@ -196,12 +201,14 @@
         if (10 - (total % 10) != lastNum) {
           $("#Input").removeClass("success");
           $("#Input").addClass("error");
+          $("#successInfo").hide();
           $("#errorInfo").show();
           return false;
         }
         $("#errorInfo").hide();
         $("#Input").addClass("success");
-        $("#Input").removeClass("error");
+				$("#Input").removeClass("error");
+				$("#successInfo").show();
         return false;
       }
     </script>
@@ -321,4 +328,4 @@
     </script>
   </body>
 </html>
-<!-- Version: 2.0.2 -->
+<!-- Version: 2.0.3 -->
